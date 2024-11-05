@@ -104,11 +104,22 @@ plt.show()
 
 # Análise Mensal
 monthly_burns = df_combined.groupby(['Ano', 'Mes']).size().unstack()
-monthly_burns.plot(kind='bar', stacked=True, figsize=(12, 6))
+monthly_burns.plot(kind='bar', stacked=True, figsize=(24, 12), width=0.3)
 plt.title('Queimadas Mensais no Amazonas')
 plt.xlabel('Ano')
 plt.ylabel('Número de Queimadas')
-plt.legend(title='Mês')
+plt.legend(['Jan', 'Fev', 'Mar', 'Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'], title='Mês', loc='center right')
+plt.show()
+
+#Análise de Risco de Incêndio Médio por Município
+avg_risk_city = df_combined.groupby('Municipio')['RiscoFogo'].mean().round(2).reset_index()
+plt.figure(figsize=(12, 6))
+plt.bar(avg_risk_city['Municipio'], avg_risk_city['RiscoFogo'], color='orangered')
+plt.xlabel('Município')
+plt.ylabel('Risco Médio de Incêndio\n(Máximo de 1.0)')
+plt.title('Risco Médio de Incêndio por Município')
+plt.xticks(rotation=90, fontsize=10)
+plt.tight_layout()
 plt.show()
 
 # Análise Espacial com Mapas de Calor
